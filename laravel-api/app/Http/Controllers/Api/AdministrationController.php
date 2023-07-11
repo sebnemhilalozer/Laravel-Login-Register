@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Auth;
+use App\Models\User;
 
 class AdministrationController extends Controller
 {
     public function __construct()
     {
-        $authModel = new Auth();
+        $authModel = new User();
         $loggedPersonId =  session()->get('loggedPerson');
         $personInfo =  $authModel->where('id', $loggedPersonId)->first();
         if (!$personInfo):die();endif;
