@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 // implements MustVerifyEmail
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
 
@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'id', 'name', 'email', 'password', 'person_role_id'
+        'id', 'name', 'email', 'password', 'person_role_id'
     ];
 
     /**
