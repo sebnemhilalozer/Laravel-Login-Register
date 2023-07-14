@@ -48,8 +48,6 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
         Route::get('user', 'AuthenticationController@user')->name('user');
         Route::post('logout', 'LoginController@logout')->name('logout');
 
-        Route::post('api/login', 'Api\Administration\LoginController@login')->name('administration.login');
-        Route::post('api/register', 'Api\Administration\RegisterController@register')->name('administration.register');
         Route::get('api/email/verify/{hash}', 'Api\Administration\VerificationController@verify')->name('administration.verification.verify');
         Route::get('api/email/resend', 'Api\Administration\VerificationController@resend')->name('administration.verification.resend');
         Route::post('api/logout', 'Api\Administration\LoginController@logout')->name('administration.logout');
