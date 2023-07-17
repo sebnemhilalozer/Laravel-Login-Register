@@ -197,7 +197,7 @@ class AdministrationController extends Controller
         $loggedPersonId =  session()->get('loggedPerson');
         $personInfo =  $authModel->where('id', $loggedPersonId)->first();
 
-        $contactModel = new contact();
+        $contactModel = new Contact();
         $list = $contactModel
             ->orderBy("id", "DESC")
             ->findAll();

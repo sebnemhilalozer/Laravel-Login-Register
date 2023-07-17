@@ -19,7 +19,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'email', 'password', 'person_role_id'
+        'id', 'organisation_id','person_role_id','prefix','first_name', 'last_name', 'email', 'password','password_change','expiration_date','deleted', 
+        'kvkk_status', 'kvkk_date', 'kvkk_status', 'subs_date'
     ];
 
     /**
@@ -37,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_confirm' => 'datetime',
     ];
 
     // public function sendEmailVerificationNotification()

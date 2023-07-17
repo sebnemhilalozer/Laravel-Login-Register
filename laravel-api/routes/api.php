@@ -47,22 +47,18 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
         Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
         Route::get('user', 'AuthenticationController@user')->name('user');
         Route::post('logout', 'LoginController@logout')->name('logout');
-
-        Route::get('api/email/verify/{hash}', 'Api\Administration\VerificationController@verify')->name('administration.verification.verify');
-        Route::get('api/email/resend', 'Api\Administration\VerificationController@resend')->name('administration.verification.resend');
-        Route::post('api/logout', 'Api\Administration\LoginController@logout')->name('administration.logout');
     });
 
-    // Dashboard Routes
-    Route::get('dashboard', 'Api\Administration\DashboardController@index')->name('administration.dashboard');
-    Route::get('dashboard/profile', 'Api\Administration\DashboardController@profile')->name('administration.profile');
-
     //Administration Routes
-    Route::get('administration/menu', 'Api\Administration\AdministrationController@menu')->name('administration.menu');
-    Route::get('administration/personmanagement', 'Api\Administration\AdministrationController@personManagement')->name('administration.personmanagement');
-    Route::get('administration/organisationmanagement', 'Api\Administration\AdministrationController@organisationManagement')->name('administration.organisationmanagement');
+    Route::get('administration/menu', 'Administration\AdministrationController@menu')->name('administration.menu');
+    Route::get('administration/personmanagement', 'Administration\AdministrationController@personManagement')->name('administration.personmanagement');
+    Route::get('administration/organisationmanagement', 'Administration\AdministrationController@organisationManagement')->name('administration.organisationmanagement');
+
+    // Dashboard Routes
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
 
+    //SAME AS ABOVE BUT WITH DIFFERENT WRITING
     Route::get('dashboard/course/continue/{num}', [DashboardController::class, 'courseContinue']);
     Route::post('dashboard/course/completed', [DashboardController::class, 'courseCompleted']);
     Route::post('dashboard/course/duration', [DashboardController::class, 'courseDuration']);

@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     protected $fillable = [
-        'id', 'title', 'slug', 'img_path', 'web_link', 'support', 'color_code', 'deleted', 'status'
+        'name','surname','email','phone', 'organisation', 'number_of_employees', 'message','email_notification','ip'
     ];
 
     protected $casts = [
-        'expiration_date' => 'datetime',
-        'active_date' => 'datetime'
+        'creation_date' => 'datetime',
     ];
 }

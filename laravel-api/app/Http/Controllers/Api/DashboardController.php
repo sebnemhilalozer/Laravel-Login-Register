@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
-class Dashboard extends Controller
+class DashboardController extends Controller
 {
 
 
