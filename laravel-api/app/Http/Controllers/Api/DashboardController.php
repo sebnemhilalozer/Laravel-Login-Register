@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -461,13 +462,13 @@ class DashboardController extends Controller
         $authModel = new User();
         $loggedPersonId = Session::get('loggedPerson');
         $personInfo = $authModel->where('id', $loggedPersonId)->first();
-        
+
         if (!$personInfo) {
             exit();
         }
-        
+
         if ($personInfo->organisation_id == 30) {
-            return Redirect::to(site_url("certificate-programs"));
+            return Redirect::to(url("certificate-programs"));
             die();
         }
 
@@ -569,7 +570,7 @@ class DashboardController extends Controller
         endif;
 
         //$course_id = $this->request->get('course_id'); Ci4 for getting request
-        $course_id = $request->get('course_id');//laravel
+        $course_id = $request->get('course_id'); //laravel
 
         /*
          * Person Course Enroll
@@ -616,8 +617,8 @@ class DashboardController extends Controller
             exit();
         endif;
 
-         //$course_id = $this->request->get('course_id'); Ci4 for getting request
-         $course_id = $request->get('course_id');//laravel
+        //$course_id = $this->request->get('course_id'); Ci4 for getting request
+        $course_id = $request->get('course_id'); //laravel
 
         $organisationCoursesModel  = new \App\Models\OrganisationCourses();
 
@@ -662,7 +663,7 @@ class DashboardController extends Controller
                         $this->saveLog("course_enroll", $insert_id, "Create");
                         $result = array("code" => 1, "message" => "Kayıt işleminiz gerçekleştirilmiştir.", "continue" => $continue);
                     else :
-                        $result = array("code" => 0, "message" => "Beklenmeyeen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.");
+                        $result = array("code" => 0, "message" => "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.");
                     endif;
                 else :
                     $insert_data = array(
@@ -677,7 +678,7 @@ class DashboardController extends Controller
                         $this->saveLog("course_enroll", $insert_id, "Create");
                         $result = array("code" => 1, "message" => "Kayıt işleminiz gerçekleştirilmiştir.", "continue" => $continue);
                     else :
-                        $result = array("code" => 0, "message" => "Beklenmeyeen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.");
+                        $result = array("code" => 0, "message" => "Beklenmeyen bir hata meydana geldi. Lütfen daha sonra tekrar deneyiniz.");
                     endif;
 
                 endif;
@@ -776,7 +777,7 @@ class DashboardController extends Controller
 
 
 
-        helper('slug');
+        // helper('slug');
         $authModel = new \App\Models\User();
         $loggedPersonId =  session()->get('loggedPerson');
         $personInfo =  $authModel->where('id', $loggedPersonId)->first();
@@ -833,11 +834,11 @@ class DashboardController extends Controller
                     ->first();
 
 
-                // if (!$organisation_courses) :
-                //     helper('url');
-                //     return redirect()->to(site_url("dashboard/course-not-access"));
-                //     die("Eğitim içeriği erişimize açık değildir!.");
-                // endif;
+            // if (!$organisation_courses) :
+            //     helper('url');
+            //     return redirect()->to(site_url("dashboard/course-not-access"));
+            //     die("Eğitim içeriği erişimize açık değildir!.");
+            // endif;
             endif;
 
         endif;
@@ -956,7 +957,7 @@ class DashboardController extends Controller
         $loggedPersonId =  session()->get('loggedPerson');
         $personInfo =  $authModel->where('id', $loggedPersonId)->first();
 
-     
+
         $courseId = $request->get('courseId');
         $contentId = $request->get('contentId');
 
@@ -1367,28 +1368,24 @@ class DashboardController extends Controller
             * FEEDBACK
             */
 
-            $validation = \config\Services::validation();
-            //Lets starts valition
-            $this->validate([
-                'feedback_course_id' => 'required|is_not_unique[course.id]',
-                'feedback_instructor_id' => 'required|is_not_unique[instructor.id]',
-                'instructor_comments' => 'max_length[512]',
-                'course_comments' => 'max_length[512]',
-
+            $validator = Validator::make($request->all(), [
+                'feedback_course_id' => 'required|exists:course,id',
+                'feedback_instructor_id' => 'required|exists:instructor,id',
+                'instructor_comments' => 'max:512',
+                'course_comments' => 'max:512',
             ]);
 
-            if ($validation->run() == FALSE) {
-                $errors = $validation->getErrors();
-                echo json_encode(['code' => 0, 'error' => $errors]);
+            if ($validator->fails()) {
+                $errors = $validator->errors()->toArray();
+                return response()->json(['code' => 0, 'error' => $errors]);
             } else {
 
-                $course_id = $this->request->getPost('feedback_course_id');
-                $instructor_id = $this->request->getPost('feedback_instructor_id');
-
-                $instructor_rate = $this->request->getPost('rate_instructor_number');
-                $instructor_comments = $this->request->getPost('instructor_comments');
-                $course_rate = $this->request->getPost('rate_course_number');
-                $course_comments = $this->request->getPost('course_comments');
+                $course_id = $request->input('feedback_course_id');
+                $instructor_id = $request->input('feedback_instructor_id');
+                $instructor_rate = $request->input('rate_instructor_number');
+                $instructor_comments = $request->input('instructor_comments');
+                $course_rate = $request->input('rate_course_number');
+                $course_comments = $request->input('course_comments');
 
                 /*
                  * Course ID
@@ -1531,17 +1528,6 @@ class DashboardController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     /*
      * COURSE NOT ACCESS
      */
@@ -1599,8 +1585,8 @@ class DashboardController extends Controller
                     "course_completed" => 1,
                     "course_completed_date" => date("Y-m-d H:i:s")
                 ];
-                $db = DB::connection()->getPdo();
-                $builder = $db->table('course_enroll');
+                // $db = DB::connection()->getPdo();  laravel'de getPdo'ya ihtiyaç yok DB facade yeterli
+                $builder = DB::table('course_enroll');
                 $query = $builder->where(array('person_id' => $personInfo["id"], 'course_id' => $item_course_list["course_id"]))->update($data_u);
             endif;
         endforeach;

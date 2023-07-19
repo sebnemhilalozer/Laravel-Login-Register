@@ -12,5 +12,4 @@ class QuizSessionStart extends Model
         'deleted', 'completed', 'score'
     ];
 
-    protected $casts = [];
 }
