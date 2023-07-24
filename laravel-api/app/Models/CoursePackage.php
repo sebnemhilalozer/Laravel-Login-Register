@@ -8,10 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CoursePackage extends Model
 {
     protected $fillable = [
-
-    ];
-
-    protected $casts = [
-      
+        'id', 'package_id', 'course_id', 'status', 'deleted', 'created_at'
     ];
 }

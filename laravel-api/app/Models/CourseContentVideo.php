@@ -8,10 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CourseContentVideo extends Model
 {
     protected $fillable = [
-
-    ];
-
-    protected $casts = [
-      
+        'id', 'course_content_id', 'cover_img', 'description', 'duration'
     ];
 }

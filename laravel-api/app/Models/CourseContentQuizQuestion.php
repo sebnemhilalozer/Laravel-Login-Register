@@ -8,10 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CourseContentQuizQuestion extends Model
 {
     protected $fillable = [
-
-    ];
-
-    protected $casts = [
-      
+        'id', 'cc_quiz_id', 'title', 'score', 'alternative_random', 'deleted'
     ];
 }

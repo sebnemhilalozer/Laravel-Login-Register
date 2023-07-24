@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CourseEnrollDropout extends Model
 {
     protected $fillable = [
-
-    ];
-
-    protected $casts = [
-      
+        'id', 'person_id', 'course_id', 'last_access_date', 'enroll_date', 'course_completed', 'course_completed_date',
+        'dropout_date'
     ];
 }
