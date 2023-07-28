@@ -131,6 +131,25 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::post('administration/course/content/quiz/question/info', 'Administration\AdministrationController@questionInfo')->name('CourseContentQuiz.questionInfo');
     Route::get('administration/course/content/folder/(:num)/(:num)', 'Administration\AdministrationController@folderContent/$1/$2')->name('CourseContentQuiz.folderContent/$1/$2');
 
+    Route::get('administration/package/getList', 'Administration\AdministrationController@getList')->name('PackageManagement.getList');
+    Route::get('administration/package/add', 'Administration\AdministrationController@add')->name('PackageManagement.add');
+    Route::post('administration/package/save', 'Administration\AdministrationController@save')->name('PackageManagement.save');
+    Route::post('administration/package/delete', 'Administration\AdministrationController@delete')->name('PackageManagement.delete');
+    Route::get('administration/package/edit/(:num)', 'Administration\AdministrationController@edit/$1')->name('PackageManagement.edit/$1');
+    Route::post('administration/package/update/(:num)', 'Administration\AdministrationController@update/$1')->name('PackageManagement.update/$1');
+
+
+   
+
+    Route::post('account/profile/foto', 'AccountController@profileFotoSave')->name('account.profileFotoSave');
+    Route::post('account/profile/foto/remove', 'AccountController@profileFotoRemove')->name('account.profileFotoRemove');
+    Route::post('account/profile/update', 'AccountController@profileUpdate')->name('account.profileUpdate');
+    Route::post('account/profile/changePassword', 'AccountController@changePasswordSave')->name('account.changePasswordSave');
+    Route::post('account/profile/notification/update', 'AccountController@notificationUpdate')->name('account.notificationUpdate');
+
+    Route::get('account/subscriptions', 'AccountController@subscriptions')->name('account.subscriptions');
+    Route::get('account/subscriptions/(:any)', 'AccountController@subscriptionsDetails/$1')->name('account.subscriptionsDetails/$1');
+
 
     // Dashboard Routes -- (SAME AS ABOVE BUT WITH DIFFERENT WRITING)
     Route::get('dashboard', [DashboardController::class, 'index']);
